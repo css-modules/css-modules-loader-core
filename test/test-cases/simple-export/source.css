@@ -1,0 +1,7 @@
+:export {
+  localName: __globalName;
+}
+
+.__globalName {
+  color: red;
+}
