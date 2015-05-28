@@ -5,7 +5,7 @@ import scope from 'postcss-modules-scope'
 
 import parser from './parser'
 
-export default Core = {
+export default {
   // These three plugins are aliased under this package for simplicity.
   localByDefault,
   extractImports,
@@ -19,14 +19,16 @@ export default Core = {
   ],
 
   load( sourceString, pathFetcher ) {
-    let parser = new Parser( pathFetcher )
+    //let parser = new Parser( pathFetcher )
+    //
+    //return postcss( this.plugins.concat( [parser] ) )
+    //  .process( sourceString )
+    //  .then( result => {
+    //
+    //  } )
 
-    return postcss( this.plugins.concat( [parser] ) )
-      .process( sourceString )
-      .then( result => {
 
-      } )
-
-    return
+    return { injectableSource: "", exportTokens: {} }
   }
 }
+

@@ -1,1 +1,3 @@
-export default parse
+export default (css, result) => {
+
+}

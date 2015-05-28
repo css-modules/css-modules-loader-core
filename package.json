@@ -1,0 +1,45 @@
+{
+  "name": "css-modules-loader-core",
+  "version": "0.0.1",
+  "description": "A loader-agnostic CSS Modules implementation, based on PostCSS",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "postcss": "^4.1.11",
+    "postcss-modules-extract-imports": "0.0.1",
+    "postcss-modules-local-by-default": "0.0.6",
+    "postcss-modules-scope": "0.0.1"
+  },
+  "devDependencies": {
+    "babel": "^5.4.7",
+    "babel-eslint": "^3.1.9",
+    "babelify": "^6.1.2",
+    "chokidar-cli": "^0.2.1",
+    "eslint": "^0.21.2",
+    "mocha": "^2.2.5",
+    "postcss": "^4.1.11"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "build": "babel --out-dir lib src",
+    "autotest": "chokidar src test -c 'npm test'",
+    "test": "mocha --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/css-modules/css-modules-loader-core.git"
+  },
+  "keywords": [
+    "css-modules",
+    "postcss",
+    "loader"
+  ],
+  "author": "Glen Maddern",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/css-modules/css-modules-loader-core/issues"
+  },
+  "homepage": "https://github.com/css-modules/css-modules-loader-core"
+}
