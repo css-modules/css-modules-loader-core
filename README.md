@@ -3,7 +3,8 @@
 
 ## API
 
-### core.load( sourceString , pathFetcher ) => { injectableSource, exportTokens }
+### core.load( sourceString , pathFetcher ) =>
+### Promise({ injectableSource, exportTokens })
 
 Processes the input CSS `sourceString`, looking for dependencies such as `@import` or `:import`. When dependencies are found, it will ask the `pathFetcher` for each dependency, resolve & inline any imports, and return the following object:
 
