@@ -15,12 +15,12 @@ describe( "test-cases", () => {
     if ( fs.existsSync( path.join( testDir, testCase, "source.css" ) ) ) {
       it( "should " + testCase.replace( /-/g, " " ), done => {
         let expected = normalize( fs.readFileSync( path.join( testDir, testCase, "expected.css" ), "utf-8" ) )
-        let loader = new FileSystemLoader()
-        let expectedTokens = JSON.parse(fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ))
-        loader.fetch(path.join(testDir, testCase, "source.css")).then(tokens => {
-          assert.equal( loader.sources.join(""), expected )
-          assert.equal( JSON.stringify(tokens), JSON.stringify(expectedTokens) )
-        }).then(done, done)
+        let loader = new FileSystemLoader( testDir )
+        let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
+        loader.fetch( `${testCase}/source.css`, "./" ).then( tokens => {
+          assert.equal( loader.sources.join( "" ), expected )
+          assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )
+        } ).then( done, done )
       } );
     }
   } );

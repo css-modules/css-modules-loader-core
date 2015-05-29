@@ -1,21 +1,28 @@
 import Core from './index.js'
 import fs from 'fs'
-import _path from 'path'
+import path from 'path'
 
 export default class FileSystemLoader {
-  constructor() {
+  constructor( root ) {
+    this.root = root
     this.sources = []
     this.seenPaths = new Set()
   }
 
-  fetch( path ) {
+  fetch( newPath, relativeTo ) {
     return new Promise( ( resolve, reject ) => {
-      fs.readFile( path, "utf-8", ( err, source ) => {
+        let fileRelativePath = path.resolve( path.resolve( this.root, relativeTo), newPath ),
+          rootRelativePath = path.relative( this.root, fileRelativePath )
+      console.log(fileRelativePath)
+      console.log(rootRelativePath)
+
+      fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
-        Core.load( source, "/" + _path.relative(__filename, path), this.fetch.bind( this ) ).then( ( { injectableSource, exportTokens } ) => {
-          this.sources.push( injectableSource )
-          resolve( exportTokens )
-        }, reject )
+        Core.load( source, rootRelativePath, this.fetch.bind( this ) )
+          .then( ( { injectableSource, exportTokens } ) => {
+            this.sources.push( injectableSource )
+            resolve( exportTokens )
+          }, reject )
       } )
     } )
   }

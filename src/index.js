@@ -22,7 +22,7 @@ export default {
     let parser = new Parser( pathFetcher )
 
     return postcss( this.plugins.concat( [parser.plugin] ) )
-      .process( sourceString, { from: sourcePath } )
+      .process( sourceString, { from: "/" + sourcePath } )
       .then( result => {
         return Promise.resolve( { injectableSource: result.css, exportTokens: parser.exportTokens } )
       } )

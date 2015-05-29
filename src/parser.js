@@ -5,17 +5,25 @@ export default class Parser {
     this.pathFetcher = pathFetcher
     this.plugin = this.plugin.bind( this )
     this.exportTokens = {}
+    this.translations = {}
   }
 
   plugin( css, result ) {
-    return new Promise( ( resolve, reject ) => {
+    Promise.all( this.fetchAllImports( css ) ).then( _ => {
       css.each( node => {
-        let { type, selector } = node
-        if ( type == "rule" && selector == ":export" ) this.handleExport( node )
-        if ( type == "rule" && selector.match(importRegexp) ) this.handleImport( node )
+        if ( node.type == "rule" && node.selector == ":export" ) this.handleExport( node )
       } )
-      resolve( css )
     } )
+  }
+
+  fetchAllImports( css ) {
+    let imports = []
+    css.each( node => {
+      if ( node.type == "rule" && node.selector.match( importRegexp ) ) {
+        imports.push( this.fetchImport( node ) )
+      }
+    } )
+    return imports
   }
 
   handleExport( exportNode ) {
@@ -27,8 +35,11 @@ export default class Parser {
     exportNode.removeSelf()
   }
 
-  handleImport( importNode ) {
-    let file = importNode.selector.match(importRegexp)[1]
+  fetchImport( importNode ) {
+    let file = importNode.selector.match( importRegexp )[1]
     console.log(file)
+    return this.pathFetcher(file).then(exports => {
+      console.log(exports)
+    })
   }
 }
