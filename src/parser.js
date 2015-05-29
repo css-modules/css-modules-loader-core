@@ -9,11 +9,8 @@ export default class Parser {
   }
 
   plugin( css, result ) {
-    return Promise.all( this.fetchAllImports( css ) ).then( _ => {
-      css.each( node => {
-        if ( node.type == "rule" && node.selector == ":export" ) this.handleExport( node )
-      } )
-    } )
+    return Promise.all( this.fetchAllImports( css ) )
+      .then( _ => this.extractExports( css ) )
   }
 
   fetchAllImports( css ) {
@@ -26,9 +23,18 @@ export default class Parser {
     return imports
   }
 
+  extractExports( css ) {
+    css.each( node => {
+      if ( node.type == "rule" && node.selector == ":export" ) this.handleExport( node )
+    } )
+  }
+
   handleExport( exportNode ) {
     exportNode.each( decl => {
       if ( decl.type == 'decl' ) {
+        Object.keys(this.translations).forEach( translation => {
+          decl.value = decl.value.replace(translation, this.translations[translation])
+        } )
         this.exportTokens[decl.prop] = decl.value
       }
     } )
@@ -37,10 +43,13 @@ export default class Parser {
 
   fetchImport( importNode, relativeTo ) {
     let file = importNode.selector.match( importRegexp )[1]
-    importNode.removeSelf()
-    return this.pathFetcher(file, relativeTo).then(exports => {
-      console.log("got export")
-      console.log(exports)
-    }, err => console.log(err))
+    return this.pathFetcher( file, relativeTo ).then( exports => {
+      importNode.each( decl => {
+        if ( decl.type == 'decl' ) {
+          this.translations[decl.value] = exports[decl.prop]
+        }
+      } )
+      importNode.removeSelf()
+    }, err => console.log( err ) )
   }
 }
