@@ -19,6 +19,7 @@ export default {
   ],
 
   load( sourceString, pathFetcher ) {
+    console.log(sourceString)
     //let parser = new Parser( pathFetcher )
     //
     //return postcss( this.plugins.concat( [parser] ) )
@@ -28,7 +29,6 @@ export default {
     //  } )
 
 
-    return { injectableSource: "", exportTokens: {} }
+    return Promise.resolve({ injectableSource: sourceString, exportTokens: {} })
   }
 }
-

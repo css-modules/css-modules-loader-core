@@ -9,13 +9,12 @@ export default class FileSystemLoader {
 
   fetch( path ) {
     return new Promise( ( resolve, reject ) => {
-      return fs.readFile( path, ( err, source ) => {
-        if (err) reject(err)
-        return Core.load( source, this.fetch.bind(this) ).then( stuff => {
-          let { injectableSource, exportTokens } = stuff
+      fs.readFile( path, "utf-8", ( err, source ) => {
+        if ( err ) reject( err )
+        Core.load( source, this.fetch.bind( this ) ).then( ( { injectableSource, exportTokens } ) => {
           this.sources.push( injectableSource )
-          return exportTokens
-        } )
+          resolve( exportTokens )
+        }, reject )
       } )
     } )
   }
