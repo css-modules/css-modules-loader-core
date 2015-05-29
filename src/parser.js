@@ -9,7 +9,7 @@ export default class Parser {
   }
 
   plugin( css, result ) {
-    Promise.all( this.fetchAllImports( css ) ).then( _ => {
+    return Promise.all( this.fetchAllImports( css ) ).then( _ => {
       css.each( node => {
         if ( node.type == "rule" && node.selector == ":export" ) this.handleExport( node )
       } )
@@ -37,9 +37,10 @@ export default class Parser {
 
   fetchImport( importNode, relativeTo ) {
     let file = importNode.selector.match( importRegexp )[1]
-    console.log(file, relativeTo)
+    importNode.removeSelf()
     return this.pathFetcher(file, relativeTo).then(exports => {
+      console.log("got export")
       console.log(exports)
-    })
+    }, err => console.log(err))
   }
 }

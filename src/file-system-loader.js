@@ -14,10 +14,6 @@ export default class FileSystemLoader {
     return new Promise( ( resolve, reject ) => {
       let rootRelativePath = path.resolve( path.dirname( relativeTo ), newPath ),
         fileRelativePath = this.root + rootRelativePath
-      console.log( newPath )
-      console.log( relativeTo )
-      console.log( rootRelativePath )
-      console.log( fileRelativePath )
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )

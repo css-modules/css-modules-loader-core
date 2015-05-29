@@ -21,10 +21,12 @@ export default {
   load( sourceString, sourcePath, pathFetcher ) {
     let parser = new Parser( pathFetcher )
 
+    console.log("PROCESSING " + sourcePath)
     return postcss( this.plugins.concat( [parser.plugin] ) )
       .process( sourceString, { from: "/" + sourcePath } )
       .then( result => {
-        return Promise.resolve( { injectableSource: result.css, exportTokens: parser.exportTokens } )
+        console.log("GOT RESULT " + sourcePath)
+        return { injectableSource: result.css, exportTokens: parser.exportTokens }
       } )
   }
 }
