@@ -1,5 +1,5 @@
 :export {
-  localName: __globalName;
+  localName: __globalName __otherName;
 }
 
 .__globalName {
