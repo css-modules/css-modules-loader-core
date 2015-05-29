@@ -19,7 +19,7 @@ describe( "test-cases", () => {
         let expectedTokens = JSON.parse(fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ))
         loader.fetch(path.join(testDir, testCase, "source.css")).then(tokens => {
           assert.equal( loader.sources.join(""), expected )
-          assert.equal( tokens, expectedTokens )
+          assert.equal( JSON.stringify(tokens), JSON.stringify(expectedTokens) )
         }).then(done, done)
       } );
     }
