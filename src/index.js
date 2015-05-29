@@ -18,13 +18,13 @@ export default {
     scope
   ],
 
-  load( sourceString, pathFetcher ) {
+  load( sourceString, sourcePath, pathFetcher ) {
     let parser = new Parser( pathFetcher )
 
     return postcss( this.plugins.concat( [parser.plugin] ) )
-      .process( sourceString )
+      .process( sourceString, { from: sourcePath } )
       .then( result => {
-        return Promise.resolve({ injectableSource: result.css, exportTokens: parser.exportTokens })
+        return Promise.resolve( { injectableSource: result.css, exportTokens: parser.exportTokens } )
       } )
   }
 }
