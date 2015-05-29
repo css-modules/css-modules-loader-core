@@ -20,7 +20,7 @@ export default class Parser {
     let imports = []
     css.each( node => {
       if ( node.type == "rule" && node.selector.match( importRegexp ) ) {
-        imports.push( this.fetchImport( node ) )
+        imports.push( this.fetchImport( node, css.source.input.from ) )
       }
     } )
     return imports
@@ -35,10 +35,10 @@ export default class Parser {
     exportNode.removeSelf()
   }
 
-  fetchImport( importNode ) {
+  fetchImport( importNode, relativeTo ) {
     let file = importNode.selector.match( importRegexp )[1]
-    console.log(file)
-    return this.pathFetcher(file).then(exports => {
+    console.log(file, relativeTo)
+    return this.pathFetcher(file, relativeTo).then(exports => {
       console.log(exports)
     })
   }

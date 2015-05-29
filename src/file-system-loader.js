@@ -9,12 +9,15 @@ export default class FileSystemLoader {
     this.seenPaths = new Set()
   }
 
-  fetch( newPath, relativeTo ) {
+  fetch( _newPath, relativeTo ) {
+    let newPath = _newPath.replace( /^["']|["']$/g, "" )
     return new Promise( ( resolve, reject ) => {
-        let fileRelativePath = path.resolve( path.resolve( this.root, relativeTo), newPath ),
-          rootRelativePath = path.relative( this.root, fileRelativePath )
-      console.log(fileRelativePath)
-      console.log(rootRelativePath)
+      let rootRelativePath = path.resolve( path.dirname( relativeTo ), newPath ),
+        fileRelativePath = this.root + rootRelativePath
+      console.log( newPath )
+      console.log( relativeTo )
+      console.log( rootRelativePath )
+      console.log( fileRelativePath )
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
