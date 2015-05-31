@@ -13,7 +13,7 @@ export default {
 
   // The default set of plugins
   plugins: [
-    //localByDefault,
+    localByDefault,
     extractImports,
     scope
   ],

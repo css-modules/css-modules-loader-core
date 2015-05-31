@@ -9,7 +9,7 @@
   "dependencies": {
     "postcss": "^4.1.11",
     "postcss-modules-extract-imports": "0.0.1",
-    "postcss-modules-local-by-default": "0.0.6",
+    "postcss-modules-local-by-default": "0.0.7",
     "postcss-modules-scope": "0.0.3"
   },
   "devDependencies": {

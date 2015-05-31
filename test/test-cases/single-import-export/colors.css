@@ -1,7 +1,3 @@
-:export {
-  blackShadow: __global_blackShadow;
-}
-
-.__global_blackShadow {
+.blackShadow {
   box-shadow: 0 0 10px -2px black;
 }

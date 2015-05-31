@@ -1,11 +1,4 @@
-:import("./colors.css") {
-  blackShadow: __tmp_blackShadow;
-}
-
-:export {
-  localName: __globalName __tmp_blackShadow;
-}
-
-.__globalName {
+.localName {
+  extends: blackShadow from "./colors.css";
   color: red;
 }
