@@ -51,9 +51,8 @@ export default class Parser {
     let file = importNode.selector.match( importRegexp )[1]
     console.log("FETCHING " + file)
     return this.pathFetcher.fetch( file, relativeTo )
-      .then( loaderData => ({
-        loaderData,
-        propResolver: exports => {
+      .then( state => {
+        state.propResolver = exports => {
           console.log("RESOLVING " + file)
           importNode.each( decl => {
             if ( decl.type == 'decl' ) {
@@ -62,6 +61,7 @@ export default class Parser {
           } )
           importNode.removeSelf()
         }
-      }) )
+        return state
+      })
   }
 }
