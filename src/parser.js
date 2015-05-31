@@ -1,11 +1,12 @@
 const importRegexp = /^:import\((.+)\)$/
 
 export default class Parser {
-  constructor( pathFetcher ) {
+  constructor( pathFetcher, trace ) {
     this.pathFetcher = pathFetcher
     this.plugin = this.plugin.bind( this )
     this.exportTokens = {}
     this.translations = {}
+    this.trace = trace
   }
 
   plugin( css, result ) {
@@ -17,7 +18,7 @@ export default class Parser {
     let imports = []
     css.each( node => {
       if ( node.type == "rule" && node.selector.match( importRegexp ) ) {
-        imports.push( this.fetchImport( node, css.source.input.from ) )
+        imports.push( this.fetchImport( node, css.source.input.from, imports.length ) )
       }
     } )
     return imports
@@ -41,9 +42,10 @@ export default class Parser {
     exportNode.removeSelf()
   }
 
-  fetchImport( importNode, relativeTo ) {
-    let file = importNode.selector.match( importRegexp )[1]
-    return this.pathFetcher( file, relativeTo ).then( exports => {
+  fetchImport( importNode, relativeTo, depNr ) {
+    let file = importNode.selector.match( importRegexp )[1],
+      depTrace = this.trace + String.fromCharCode(depNr)
+    return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
       importNode.each( decl => {
         if ( decl.type == 'decl' ) {
           this.translations[decl.value] = exports[decl.prop]

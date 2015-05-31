@@ -18,7 +18,7 @@ describe( "test-cases", () => {
         let loader = new FileSystemLoader( testDir )
         let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
         loader.fetch( `${testCase}/source.css`, "/" ).then( tokens => {
-          assert.equal( loader.sources.join( "" ), expected )
+          assert.equal( loader.finalSource, expected )
           assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )
         } ).then( done, done )
       } );

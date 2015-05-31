@@ -18,8 +18,8 @@ export default {
     scope
   ],
 
-  load( sourceString, sourcePath, pathFetcher ) {
-    let parser = new Parser( pathFetcher )
+  load( sourceString, sourcePath, trace, pathFetcher ) {
+    let parser = new Parser( pathFetcher, trace )
 
     return postcss( this.plugins.concat( [parser.plugin] ) )
       .process( sourceString, { from: "/" + sourcePath } )

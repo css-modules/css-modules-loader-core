@@ -1,0 +1,4 @@
+.b {
+  extends: d from "./d.css";
+  color: #bbb;
+}
