@@ -1,6 +1,8 @@
-.__global_blackShadow {
+
+._single_import_export_colors__blackShadow {
   box-shadow: 0 0 10px -2px black;
 }
-.__globalName {
+
+._single_import_export_source__localName {
   color: red;
 }
