@@ -17,12 +17,10 @@ describe( "test-cases", () => {
         let expected = normalize( fs.readFileSync( path.join( testDir, testCase, "expected.css" ), "utf-8" ) )
         let loader = new FileSystemLoader( testDir )
         let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
-        loader.fetch( `${testCase}/source.css`, "/" )
-          .then( state => loader.load( state ) )
-          .then( tokens => {
-            assert.equal( loader.sources.join( "" ), expected )
-            assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )
-          } ).then( done, done )
+        loader.fetch( `${testCase}/source.css`, "/" ).then( tokens => {
+          assert.equal( loader.sources.join( "" ), expected )
+          assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )
+        } ).then( done, done )
       } );
     }
   } );
