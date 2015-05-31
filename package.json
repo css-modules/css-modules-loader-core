@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "postcss": "^4.1.11",
-    "postcss-modules-extract-imports": "0.0.1",
+    "postcss-modules-extract-imports": "0.0.2",
     "postcss-modules-local-by-default": "0.0.7",
     "postcss-modules-scope": "0.0.3"
   },
@@ -17,7 +17,7 @@
     "babel-eslint": "^3.1.9",
     "babelify": "^6.1.2",
     "chokidar-cli": "^0.2.1",
-    "eslint": "^0.21.2",
+    "eslint": "^0.22.1",
     "mocha": "^2.2.5"
   },
   "scripts": {

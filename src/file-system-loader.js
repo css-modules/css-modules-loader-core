@@ -16,13 +16,18 @@ export default class FileSystemLoader {
         fileRelativePath = this.root + rootRelativePath
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
-        if ( err ) reject( err )
-        Core.load( source, rootRelativePath, this.fetch.bind( this ) )
-          .then( ( { injectableSource, exportTokens } ) => {
-            this.sources.push( injectableSource )
-            resolve( exportTokens )
-          }, reject )
+        err ? reject( err ) : resolve( { source, rootRelativePath } )
       } )
     } )
+  }
+
+  load( {source, rootRelativePath} ) {
+    console.log("LOADING " + rootRelativePath)
+    return Core.load( source, rootRelativePath, this )
+      .then( ( { injectableSource, exportTokens } ) => {
+        console.log("LOADED " + rootRelativePath)
+        this.sources.push( injectableSource )
+        return exportTokens
+      } )
   }
 }
