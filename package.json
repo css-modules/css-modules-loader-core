@@ -24,7 +24,8 @@
     "lint": "eslint src",
     "build": "babel --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
-    "test": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -34,6 +35,9 @@
     "css-modules",
     "postcss",
     "loader"
+  ],
+  "files": [
+    "lib"
   ],
   "author": "Glen Maddern",
   "license": "ISC",
