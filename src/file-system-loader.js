@@ -23,7 +23,6 @@ export default class FileSystemLoader {
   constructor( root ) {
     this.root = root
     this.sources = {}
-    this.seenPaths = new Set()
     this.importNr = 0
   }
 
