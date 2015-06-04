@@ -1,6 +1,8 @@
 # CSS Module Loader Core
 > A loader-agnostic CSS Modules implementation, based on PostCSS
 
+[![Build Status](https://travis-ci.org/css-modules/css-modules-loader-core.svg?branch=master)](https://travis-ci.org/css-modules/css-modules-loader-core)
+
 ## API
 
 ### core.load( sourceString , sourcePath , pathFetcher ) =><br>&nbsp;&nbsp;Promise({ injectableSource, exportTokens })
