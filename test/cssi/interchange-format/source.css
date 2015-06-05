@@ -1,8 +1,8 @@
-:imports("./colors.css") {
+:import("./colors.css") {
   __tmp_import_djhgdsag: blackShadow;
 }
 
-:exports {
+:export {
   localName: _single_import_export_source__localName __tmp_import_djhgdsag;
 }
 
