@@ -5,18 +5,10 @@ import scope from 'postcss-modules-scope'
 
 import Parser from './parser'
 
-export default {
-  // These three plugins are aliased under this package for simplicity.
-  localByDefault,
-  extractImports,
-  scope,
-
-  // The default set of plugins
-  plugins: [
-    localByDefault,
-    extractImports,
-    scope
-  ],
+export default class Core {
+  constructor( plugins ) {
+    this.plugins = plugins || Core.defaultPlugins
+  }
 
   load( sourceString, sourcePath, trace, pathFetcher ) {
     let parser = new Parser( pathFetcher, trace )
@@ -28,3 +20,10 @@ export default {
       } )
   }
 }
+
+
+// These three plugins are aliased under this package for simplicity.
+Core.localByDefault = localByDefault
+Core.extractImports = extractImports
+Core.scope = scope
+Core.defaultPlugins = [localByDefault, extractImports, scope]

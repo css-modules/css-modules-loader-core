@@ -20,10 +20,11 @@ const traceKeySorter = ( a, b ) => {
 };
 
 export default class FileSystemLoader {
-  constructor( root ) {
+  constructor( root, plugins ) {
     this.root = root
     this.sources = {}
     this.importNr = 0
+    this.core = new Core(plugins)
   }
 
   fetch( _newPath, relativeTo, _trace ) {
@@ -35,7 +36,7 @@ export default class FileSystemLoader {
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
-        Core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
+        this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
           .then( ( { injectableSource, exportTokens } ) => {
             this.sources[trace] = injectableSource
             resolve( exportTokens )
