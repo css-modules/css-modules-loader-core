@@ -1,4 +1,4 @@
 .b {
-  extends: d from "./d.css";
+  composes: d from "./d.css";
   color: #bbb;
 }
