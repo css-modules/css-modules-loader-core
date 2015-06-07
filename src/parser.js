@@ -11,6 +11,7 @@ export default class Parser {
 
   plugin( css, result ) {
     return Promise.all( this.fetchAllImports( css ) )
+      .then( _ => this.linkImportedSymbols( css ) )
       .then( _ => this.extractExports( css ) )
   }
 
@@ -22,6 +23,14 @@ export default class Parser {
       }
     } )
     return imports
+  }
+
+  linkImportedSymbols( css ) {
+    css.eachDecl( decl => {
+      Object.keys(this.translations).forEach( translation => {
+        decl.value = decl.value.replace(translation, this.translations[translation])
+      } )
+    })
   }
 
   extractExports( css ) {
@@ -48,7 +57,7 @@ export default class Parser {
     return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
       importNode.each( decl => {
         if ( decl.type == 'decl' ) {
-          this.translations[decl.value] = exports[decl.prop]
+          this.translations[decl.prop] = exports[decl.value]
         }
       } )
       importNode.removeSelf()

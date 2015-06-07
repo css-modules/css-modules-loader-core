@@ -1,6 +1,6 @@
 .a {
-  extends: b from "./b.css";
-  extends: c from "./c.css";
+  composes: b from "./b.css";
+  composes: c from "./c.css";
   color: #aaa;
 }
 
