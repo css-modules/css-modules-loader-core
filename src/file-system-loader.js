@@ -31,8 +31,9 @@ export default class FileSystemLoader {
     let newPath = _newPath.replace( /^["']|["']$/g, "" ),
       trace = _trace || String.fromCharCode( this.importNr++ )
     return new Promise( ( resolve, reject ) => {
-      let rootRelativePath = path.resolve( path.dirname( relativeTo ), newPath ),
-        fileRelativePath = this.root + rootRelativePath
+      let relativeDir = path.dirname( relativeTo ),
+        rootRelativePath = path.resolve( relativeDir, newPath ),
+        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
