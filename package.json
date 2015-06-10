@@ -10,11 +10,11 @@
     "postcss": "^4.1.11",
     "postcss-modules-extract-imports": "0.0.3",
     "postcss-modules-local-by-default": "^0.0.7",
-    "postcss-modules-scope": "^0.0.5"
+    "postcss-modules-scope": "^0.0.6"
   },
   "devDependencies": {
-    "babel": "^5.5.4",
-    "babel-eslint": "^3.1.14",
+    "babel": "^5.5.6",
+    "babel-eslint": "^3.1.15",
     "babelify": "^6.1.2",
     "chokidar-cli": "^0.2.1",
     "eslint": "^0.22.1",
