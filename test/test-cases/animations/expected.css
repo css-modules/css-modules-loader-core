@@ -1,0 +1,7 @@
+._animations_source__fader {
+  animation: _animations_source__fade-in 1s;
+}
+
+@keyframes _animations_source__fade-in {
+  0% { opacity: 0; }
+}

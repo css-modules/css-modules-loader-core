@@ -1,0 +1,8 @@
+.fader {
+  animation: fade-in 1s;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+}
+
