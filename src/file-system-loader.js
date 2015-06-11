@@ -25,6 +25,7 @@ export default class FileSystemLoader {
     this.sources = {}
     this.importNr = 0
     this.core = new Core(plugins)
+    this.tokensByFile = {};
   }
 
   fetch( _newPath, relativeTo, _trace ) {
@@ -35,11 +36,15 @@ export default class FileSystemLoader {
         rootRelativePath = path.resolve( relativeDir, newPath ),
         fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
 
+      const tokens = this.tokensByFile[fileRelativePath]
+      if (tokens) { return resolve(tokens) }
+
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
         this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
           .then( ( { injectableSource, exportTokens } ) => {
             this.sources[trace] = injectableSource
+            this.tokensByFile[fileRelativePath] = exportTokens
             resolve( exportTokens )
           }, reject )
       } )
