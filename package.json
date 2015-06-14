@@ -1,6 +1,6 @@
 {
   "name": "css-modules-loader-core",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A loader-agnostic CSS Modules implementation, based on PostCSS",
   "main": "lib/index.js",
   "directories": {
