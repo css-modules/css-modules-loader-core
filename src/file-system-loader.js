@@ -51,6 +51,25 @@ export default class FileSystemLoader {
     } )
   }
 
+  fetchSync( _newPath, relativeTo, _trace ) {
+    let newPath = _newPath.replace( /^["']|["']$/g, "" ),
+      trace = _trace || String.fromCharCode( this.importNr++ )
+
+    let relativeDir = path.dirname( relativeTo ),
+      rootRelativePath = path.resolve( relativeDir, newPath ),
+      fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+
+    const tokens = this.tokensByFile[fileRelativePath]
+    if (tokens) { return tokens }
+
+    let source = fs.readFileSync( fileRelativePath, "utf-8" )
+    // May occur an error while loading async plugins
+    let { injectableSource, exportTokens } = this.core.loadSync( source, rootRelativePath, trace, this.fetchSync.bind( this ) )
+    this.sources[trace] = injectableSource
+    this.tokensByFile[fileRelativePath] = exportTokens
+    return exportTokens
+  }
+
   get finalSource() {
     return Object.keys( this.sources ).sort( traceKeySorter ).map( s => this.sources[s] )
       .join( "" )
