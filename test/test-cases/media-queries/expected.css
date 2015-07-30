@@ -1,0 +1,21 @@
+._media-queries_source__red {
+  color: red;
+}
+
+@media (max-width: 30em) {
+  ._media-queries_source__red {
+    color: maroon;
+  }
+}
+
+@media (max-width: 60em) {
+  ._media-queries_source__red {
+    color: darkmagenta;
+  }
+}
+
+@media (max-width: 90em) {
+  ._media-queries_source__red {
+    color: fuchsia;
+  }
+}

@@ -1,0 +1,25 @@
+@custom-media --small from "./breakpoints.css";
+@custom-media --medium from "./breakpoints.css";
+@custom-media --large from "./breakpoints.css";
+
+.red {
+  color: red;
+}
+
+@media (--small) {
+  .red {
+    color: maroon;
+  }
+}
+
+@media (--medium) {
+  .red {
+    color: darkmagenta;
+  }
+}
+
+@media (--large) {
+  .red {
+    color: fuchsia;
+  }
+}
