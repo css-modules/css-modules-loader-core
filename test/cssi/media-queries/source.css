@@ -1,0 +1,37 @@
+:imports("./breakpoints.css") {
+  --i__breakpoints__small: --small;
+  --i__breakpoints__medium: --medium;
+  --i__breakpoints__large: --large;
+}
+
+:exports {
+  --small: --x__source__small;
+  --medium: --x__source__medium;
+  --large: --x__source__large;
+}
+
+@custom-media --x__source__small --i__breakpoints__small;
+@custom-media --x__source__medium --i__breakpoints__medium;
+@custom-media --x__source__large --i__breakpoints__large;
+
+.red {
+  color: red;
+}
+
+@media (--x__source__small) {
+  .red {
+    color: maroon;
+  }
+}
+
+@media (--x__source__medium) {
+  .red {
+    color: darkmagenta;
+  }
+}
+
+@media (--x__source__large) {
+  .red {
+    color: fuchsia;
+  }
+}

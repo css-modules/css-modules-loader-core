@@ -1,6 +1,6 @@
 @custom-media --small from "./breakpoints.css";
 @custom-media --medium from "./breakpoints.css";
-@custom-media --large from "./breakpoints.css";
+@custom-media --large (min-width: 90em);
 
 .red {
   color: red;
