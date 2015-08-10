@@ -26,10 +26,18 @@ export default class Parser {
   }
 
   linkImportedSymbols( css ) {
-    css.eachDecl( decl => {
-      Object.keys(this.translations).forEach( translation => {
-        decl.value = decl.value.replace(translation, this.translations[translation])
-      } )
+    css.eachInside( node => {
+      if ( node.type === "decl" ) {
+        this.replaceOccurrences( node, "value" )
+      } else if ( node.type === "atrule" && node.name === "custom-media" ) {
+        this.replaceOccurrences( node, "params" )
+      }
+    })
+  }
+
+  replaceOccurrences( node, prop ) {
+    Object.keys(this.translations).forEach(translation => {
+      node[prop] = node[prop].replace(translation, this.translations[translation])
     })
   }
 
@@ -57,7 +65,7 @@ export default class Parser {
     return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
       importNode.each( decl => {
         if ( decl.type == 'decl' ) {
-          this.translations[decl.prop] = exports[decl.value]
+          this.translations[decl.prop] = exports[decl.value].replace(/^['"]|['"]$/g,'')
         }
       } )
       importNode.removeSelf()

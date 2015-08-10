@@ -1,6 +1,9 @@
 @custom-media --small (max-width: 30em);
 @custom-media --medium (max-width: 60em);
 @custom-media --large (max-width: 90em);
+@custom-media --small (max-width: 30em);
+@custom-media --medium (max-width: 60em);
+@custom-media --large (max-width: 90em);
 
 .exported-red {
   color: red;

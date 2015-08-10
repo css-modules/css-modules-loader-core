@@ -1,5 +1,6 @@
 {
-  "--small": "--x__source__small",
-  "--medium": "--x__source__medium",
-  "--large": "--x__source__large"
+  "--small": "(max-width: 30em)",
+  "--medium": "(max-width: 60em)",
+  "--large": "(max-width: 90em)",
+  "red": "exported-red"
 }
