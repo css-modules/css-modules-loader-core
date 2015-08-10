@@ -1,9 +1,9 @@
 :exports {
-  --small: --x__breakpoints__small;
-  --medium: --x__breakpoints__medium;
-  --large: --x__breakpoints__large;
+  --small: "(max-width: 30em)";
+  --medium: "(max-width: 60em)";
+  --large: "(max-width: 90em)";
 }
 
-@custom-media --x__breakpoints__small (max-width: 30em);
-@custom-media --x__breakpoints__medium (max-width: 60em);
-@custom-media --x__breakpoints__large (max-width: 90em);
+@custom-media --small (max-width: 30em);
+@custom-media --medium (max-width: 60em);
+@custom-media --large (max-width: 90em);

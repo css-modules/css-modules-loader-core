@@ -1,25 +1,25 @@
-@custom-media --x__source__small (max-width: 30em);
-@custom-media --x__source__medium (max-width: 60em);
-@custom-media --x__source__large (max-width: 90em);
+@custom-media --small (max-width: 30em);
+@custom-media --medium (max-width: 60em);
+@custom-media --large (max-width: 90em);
 
-._media-queries_source__red {
+.exported-red {
   color: red;
 }
 
-@media (max-width: 30em) {
-  ._media-queries_source__red {
+@media (--small) {
+  .exported-red {
     color: maroon;
   }
 }
 
-@media (max-width: 60em) {
-  ._media-queries_source__red {
+@media (--medium) {
+  .exported-red {
     color: darkmagenta;
   }
 }
 
-@media (max-width: 90em) {
-  ._media-queries_source__red {
+@media (--large) {
+  .exported-red {
     color: fuchsia;
   }
 }
