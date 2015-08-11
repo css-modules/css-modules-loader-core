@@ -21,7 +21,7 @@ Object.keys( pipelines ).forEach( dirname => {
       if ( fs.existsSync( path.join( testDir, testCase, "source.css" ) ) ) {
         it( "should " + testCase.replace( /-/g, " " ), done => {
           let expected = normalize( fs.readFileSync( path.join( testDir, testCase, "expected.css" ), "utf-8" ) )
-          let loader = new FileSystemLoader( testDir, pipelines[dirname] )
+          let loader = new FileSystemLoader( testDir, pipelines[dirname], pipelines[dirname] )
           let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
           loader.fetch( `${testCase}/source.css`, "/" ).then( tokens => {
             assert.equal( loader.finalSource, expected )

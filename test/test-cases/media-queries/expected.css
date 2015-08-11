@@ -1,26 +1,21 @@
-@custom-media --small (max-width: 30em);
-@custom-media --medium (max-width: 60em);
-@custom-media --small (max-width: 30em);
-@custom-media --medium (max-width: 60em);
-@custom-media --large (max-width: 90em);
 
 ._media_queries_source__red {
   color: red;
 }
 
-@media (--small) {
+@media (max-width: 30em) {
   ._media_queries_source__red {
     color: maroon;
   }
 }
 
-@media (--medium) {
+@media (max-width: 60em) {
   ._media_queries_source__red {
     color: darkmagenta;
   }
 }
 
-@media (--large) {
+@media (max-width: 90em) {
   ._media_queries_source__red {
     color: fuchsia;
   }
