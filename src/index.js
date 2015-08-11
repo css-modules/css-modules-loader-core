@@ -21,7 +21,6 @@ export default class Core {
   }
 }
 
-
 // These three plugins are aliased under this package for simplicity.
 Core.localByDefault = localByDefault
 Core.extractImports = extractImports
