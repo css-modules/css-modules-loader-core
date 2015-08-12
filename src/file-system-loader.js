@@ -2,6 +2,15 @@ import Core from './index.js'
 import fs from 'fs'
 import path from 'path'
 
+const escapedSeparator = path.sep.replace(/(.)/g, '\\$1');
+const relativePathPattern = new RegExp(`^.{1,2}$|^.{1,2}${escapedSeparator}`);
+
+// Checks if the provided path is relative or not
+const isModule = pathname => {
+  const parsed = path.parse(pathname);
+  return !parsed.root && !relativePathPattern.test(parsed.dir);
+}
+
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
 // AB comes after AA and before A
@@ -37,7 +46,7 @@ export default class FileSystemLoader {
         fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
 
       // if the path is not relative or absolute, try to resolve it in node_modules
-      if (newPath[0] !== '.' && newPath[0] !== '/') {
+      if (isModule(newPath)) {
         try {
           fileRelativePath = require.resolve(newPath);
         }

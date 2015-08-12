@@ -6,6 +6,9 @@
   "directories": {
     "test": "test"
   },
+  "engines": {
+    "node": ">0.12"
+  },
   "dependencies": {
     "postcss": "^4.1.11",
     "postcss-modules-extract-imports": "^0.0.5",
