@@ -5,10 +5,10 @@ import path from 'path'
 const escapedSeparator = path.sep.replace(/(.)/g, '\\$1');
 const relativePathPattern = new RegExp(`^.{1,2}$|^.{1,2}${escapedSeparator}`);
 
-// Checks if the provided path is relative or not
+// Checks if the path to the external module given
 const isModule = pathname => {
-  const parsed = path.parse(pathname);
-  return !parsed.root && !relativePathPattern.test(parsed.dir);
+  const parsed = path.parse( pathname );
+  return !parsed.root && !relativePathPattern.test( parsed.dir );
 }
 
 // Sorts dependencies in the following way:
@@ -48,7 +48,7 @@ export default class FileSystemLoader {
       // if the path is not relative or absolute, try to resolve it in node_modules
       if (isModule(newPath)) {
         try {
-          fileRelativePath = require.resolve(newPath);
+          fileRelativePath = require.resolve( newPath );
         }
         catch (e) {}
       }
