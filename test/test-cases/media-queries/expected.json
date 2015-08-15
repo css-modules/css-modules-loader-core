@@ -1,0 +1,6 @@
+{
+  "red": "_media_queries_source__red",
+  "--small": "(max-width: 30em)",
+  "--medium": "(max-width: 60em)",
+  "--large": "(max-width: 90em)"
+}

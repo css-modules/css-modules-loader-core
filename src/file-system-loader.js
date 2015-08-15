@@ -20,11 +20,11 @@ const traceKeySorter = ( a, b ) => {
 };
 
 export default class FileSystemLoader {
-  constructor( root, plugins ) {
+  constructor( root, plugins, postLinkers ) {
     this.root = root
     this.sources = {}
     this.importNr = 0
-    this.core = new Core(plugins)
+    this.core = new Core( plugins, postLinkers )
     this.tokensByFile = {};
   }
 
