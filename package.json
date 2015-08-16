@@ -7,7 +7,7 @@
     "test": "test"
   },
   "engines": {
-    "node": ">0.12"
+    "node": ">=0.12"
   },
   "dependencies": {
     "postcss": "^4.1.11",
