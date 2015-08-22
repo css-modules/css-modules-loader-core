@@ -1,6 +1,8 @@
 import Core from './index.js'
 import fs from 'fs'
 import path from 'path'
+import partialRight from 'lodash.partialright'
+import {parse} from 'postcss';
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
@@ -28,7 +30,7 @@ export default class FileSystemLoader {
     this.tokensByFile = {};
   }
 
-  fetch( _newPath, relativeTo, _trace ) {
+  fetch( _newPath, relativeTo, _trace, composedClasses ) {
     let newPath = _newPath.replace( /^["']|["']$/g, "" ),
       trace = _trace || String.fromCharCode( this.importNr++ )
     return new Promise( ( resolve, reject ) => {
@@ -44,12 +46,36 @@ export default class FileSystemLoader {
         catch (e) {}
       }
 
-      const tokens = this.tokensByFile[fileRelativePath]
-      if (tokens) { return resolve(tokens) }
+      fs.readFile( fileRelativePath, 'utf-8', ( err, source ) => {
 
-      fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
+      if (composedClasses) {
+        let root = parse(source);
+
+        let exportedNames = {};
+
+        root.each( node => {
+          if ( node.type === 'rule' && node.selector === ':export' ) {
+            node.each( decl => {
+              exportedNames[decl.prop] = decl.value;
+            } )
+          }
+        } )
+
+        root.each(decl => {
+          if (!composedClasses.some(name => {
+            if (exportedNames[name]) {
+              name = exportedNames[name]
+            }
+            return decl.selector === ':export' || containsClass(decl.selector, name)
+          })) {
+            decl.removeSelf()
+          }
+        })
+        source = root.toString()
+      }
+
         if ( err ) reject( err )
-        this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
+        this.core.load( source, rootRelativePath, trace, partialRight(this.fetch.bind( this ), composedClasses) )
           .then( ( { injectableSource, exportTokens } ) => {
             this.sources[trace] = injectableSource
             this.tokensByFile[fileRelativePath] = exportTokens
@@ -63,4 +89,9 @@ export default class FileSystemLoader {
     return Object.keys( this.sources ).sort( traceKeySorter ).map( s => this.sources[s] )
       .join( "" )
   }
+}
+
+function containsClass(selector, className) {
+  let test = new RegExp('\\.' + className + '($|[\\s\.\[,>+~#:])');
+  return selector.match(test);
 }
