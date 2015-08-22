@@ -24,7 +24,7 @@
     "lint": "eslint src",
     "build": "babel --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
-    "test": "mocha --compilers js:babel/register",
+    "test": "npm run lint && mocha --compilers js:babel/register",
     "prepublish": "npm run build"
   },
   "repository": {
