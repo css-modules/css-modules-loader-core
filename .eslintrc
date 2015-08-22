@@ -21,6 +21,7 @@
 		"jsx": true
 	},
 	"rules": {
-		"quotes": "single"
+		"quotes": [2, "single"],
+		"space-in-parens": [2, "always"]
 	}
 }
