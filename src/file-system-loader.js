@@ -1,8 +1,9 @@
 import Core from './index.js'
 import fs from 'fs'
 import path from 'path'
-import partialRight from 'lodash.partialright'
 import {parse} from 'postcss';
+import selectorHas from 'selector-has'
+import partialRight from 'lodash.partialright'
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
@@ -66,7 +67,7 @@ export default class FileSystemLoader {
             if (exportedNames[name]) {
               name = exportedNames[name]
             }
-            return decl.selector === ':export' || containsClass(decl.selector, name)
+            return decl.selector === ':export' || selectorHas(decl.selector, name)
           })) {
             decl.removeSelf()
           }
@@ -89,9 +90,4 @@ export default class FileSystemLoader {
     return Object.keys( this.sources ).sort( traceKeySorter ).map( s => this.sources[s] )
       .join( "" )
   }
-}
-
-function containsClass(selector, className) {
-  let test = new RegExp('\\.' + className + '($|[\\s\.\[,>+~#:])');
-  return selector.match(test);
 }
