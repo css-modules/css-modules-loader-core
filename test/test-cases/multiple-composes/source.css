@@ -1,0 +1,9 @@
+.a {
+  composes: c1 from "./c.css";
+  color: #aaa;
+}
+
+.b {
+  composes: c2 from "./c.css";
+  color: #bbb;
+}

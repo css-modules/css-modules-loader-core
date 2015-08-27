@@ -16,10 +16,12 @@ export default class Parser {
   }
 
   fetchAllImports( css ) {
+    let importedClasses = []
     let imports = []
     css.each( node => {
       if ( node.type == "rule" && node.selector.match( importRegexp ) ) {
-        imports.push( this.fetchImport( node, css.source.input.from, imports.length ) )
+        importedClasses = node.nodes.map(decl => decl.value);
+        imports.push( this.fetchImport( node, css.source.input.from, imports.length, importedClasses ) )
       }
     } )
     return imports
@@ -51,10 +53,11 @@ export default class Parser {
     exportNode.removeSelf()
   }
 
-  fetchImport( importNode, relativeTo, depNr ) {
+  fetchImport( importNode, relativeTo, depNr, importedClasses ) {
     let file = importNode.selector.match( importRegexp )[1],
       depTrace = this.trace + String.fromCharCode(depNr)
-    return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
+
+    return this.pathFetcher( file, relativeTo, depTrace, importedClasses ).then( exports => {
       importNode.each( decl => {
         if ( decl.type == 'decl' ) {
           this.translations[decl.prop] = exports[decl.value]

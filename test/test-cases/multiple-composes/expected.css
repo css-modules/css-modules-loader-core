@@ -1,0 +1,25 @@
+._multiple_composes_d__d1 {
+  color: #d1d1d1;
+}
+
+._multiple_composes_d__d2 {
+  color: #d2d2d2;
+}
+
+._multiple_composes_d__d1 ._multiple_composes_d__another {
+  color: #555;
+}
+._multiple_composes_c__c1 {
+  color: #c1c1c1;
+}
+
+._multiple_composes_c__c2 {
+  color: #c2c2c2;
+}
+._multiple_composes_source__a {
+  color: #aaa;
+}
+
+._multiple_composes_source__b {
+  color: #bbb;
+}

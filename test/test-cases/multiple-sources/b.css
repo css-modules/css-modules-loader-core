@@ -2,3 +2,11 @@
   composes: d from "./d.css";
   color: #bbb;
 }
+
+.b2 {
+  color: #b2b2b2;
+}
+
+.ab {
+  color: #ababab;
+}

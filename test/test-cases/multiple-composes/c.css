@@ -1,0 +1,14 @@
+.c1 {
+  composes: d1 from "./d.css";
+  color: #c1c1c1;
+}
+
+.c2 {
+  composes: d2 from "./d.css";
+  color: #c2c2c2;
+}
+
+.c3 {
+  composes: d3 from "./d.css";
+  color: #c3c3c3;
+}

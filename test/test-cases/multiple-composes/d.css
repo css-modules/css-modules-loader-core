@@ -1,0 +1,15 @@
+.d1 {
+  color: #d1d1d1;
+}
+
+.d2 {
+  color: #d2d2d2;
+}
+
+.d3 {
+  color: #d3d3d3;
+}
+
+.d1 .another {
+  color: #555;
+}
