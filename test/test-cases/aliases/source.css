@@ -1,0 +1,15 @@
+@alias "./borders.css" as borders;
+@alias small from "./breakpoints.css";
+@alias secondary, primary as blue from "./colors.css";
+
+.foo {
+  composes: dashed from borders;
+  background: blue;
+  border-color: secondary;
+}
+
+@media small {
+  .foo {
+    background: white;
+  }
+}

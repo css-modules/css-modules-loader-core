@@ -1,0 +1,12 @@
+._aliases_borders__bar {
+  color: red;
+}
+._aliases_source__foo {
+  background: aquamarine;
+  border-color: red;
+}
+@media (max-width: 599px) {
+  ._aliases_source__foo {
+    background: white;
+  }
+}
