@@ -3,7 +3,9 @@
 
 [![Build Status](https://travis-ci.org/css-modules/css-modules-loader-core.svg?branch=master)](https://travis-ci.org/css-modules/css-modules-loader-core)
 
-## API
+## Async API
+
+The async API is default, simply load `css-modules-loader-core`
 
 ```js
 import Core from 'css-modules-loader-core'
@@ -12,12 +14,32 @@ let core = new Core()
 
 ### core.load( sourceString , sourcePath , pathFetcher ) =><br>&nbsp;&nbsp;Promise({ injectableSource, exportTokens })
 
-Processes the input CSS `sourceString`, looking for dependencies such as `@import` or `:import`. Any localisation will happen by prefixing a sanitised version of `sourcePath` When dependencies are found, it will ask the `pathFetcher` for each dependency, resolve & inline any imports, and return the following object:
+Processes the input CSS `sourceString`, looking for dependencies such as `@import` or `:import`. Any localisation will happen by prefixing a sanitised version of `sourcePath` When dependencies are found, it will ask the `pathFetcher` for each dependency, asynchronously resolve & inline any imports, and return the following object:
 
 - `injectableSource`: the final, merged CSS file without `@import` or `:import` statements
 - `exportTokens`: the mapping from local name to scoped name, as described in the file's `:export` block
 
 These should map nicely to what your build-tool-specific loader needs to do its job.
+
+
+## Sync API
+
+The sync API is available at `css-modules-loader-core/sync`
+
+```js
+import Core from 'css-modules-loader-core/sync'
+let core = new Core()
+```
+
+### core.load( sourceString , sourcePath , pathFetcher ) =><br>&nbsp;&nbsp;{ injectableSource, exportTokens }
+
+Processes the input CSS `sourceString`, looking for dependencies such as `@import` or `:import`. Any localisation will happen by prefixing a sanitised version of `sourcePath` When dependencies are found, it will ask the `pathFetcher` for each dependency, synchronously resolve & inline any imports, and return the following object:
+
+- `injectableSource`: the final, merged CSS file without `@import` or `:import` statements
+- `exportTokens`: the mapping from local name to scoped name, as described in the file's `:export` block
+
+These should map nicely to what your build-tool-specific loader needs to do its job.
+
 
 ### new Core([plugins])
 
