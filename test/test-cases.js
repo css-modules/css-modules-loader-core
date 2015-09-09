@@ -5,6 +5,10 @@ import fs from "fs"
 import path from "path"
 import FileSystemLoader from "../src/file-system-loader"
 
+import PostcssLocal from "postcss-modules-local-by-default"
+import PostcssExtract from "postcss-modules-extract-imports"
+import PostcssScope from "postcss-modules-scope"
+
 let normalize = ( str ) => {
   return str.replace( /\r\n?/g, "\n" );
 }
@@ -14,6 +18,14 @@ const pipelines = {
   "cssi": []
 }
 
+const getPlugins = rootDir => {
+  return [
+    PostcssLocal,
+    PostcssExtract,
+    new PostcssScope({rootDir: rootDir})
+  ];
+}
+
 Object.keys( pipelines ).forEach( dirname => {
   describe( dirname, () => {
     let testDir = path.join( __dirname, dirname )
@@ -21,9 +33,9 @@ Object.keys( pipelines ).forEach( dirname => {
       if ( fs.existsSync( path.join( testDir, testCase, "source.css" ) ) ) {
         it( "should " + testCase.replace( /-/g, " " ), done => {
           let expected = normalize( fs.readFileSync( path.join( testDir, testCase, "expected.css" ), "utf-8" ) )
-          let loader = new FileSystemLoader( testDir, pipelines[dirname] )
+          let loader = new FileSystemLoader( testDir, pipelines[dirname] || getPlugins(testDir) )
           let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
-          loader.fetch( `${testCase}/source.css`, "/" ).then( tokens => {
+          loader.fetch( path.join( testDir, testCase, "source.css" ) ).then( tokens => {
             assert.equal( loader.finalSource, expected )
             assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )
           } ).then( done, done )
@@ -41,10 +53,10 @@ describe( 'multiple sources', () => {
   if ( fs.existsSync( path.join( testDir, testCase, "source1.css" ) ) ) {
     it( "should " + testCase.replace( /-/g, " " ), done => {
       let expected = normalize( fs.readFileSync( path.join( testDir, testCase, "expected.css" ), "utf-8" ) )
-      let loader = new FileSystemLoader( testDir, pipelines[dirname] )
+      let loader = new FileSystemLoader( testDir, pipelines[dirname] || getPlugins(testDir) )
       let expectedTokens = JSON.parse( fs.readFileSync( path.join( testDir, testCase, "expected.json" ), "utf-8" ) )
-      loader.fetch( `${testCase}/source1.css`, "/" ).then( tokens1 => {
-        loader.fetch( `${testCase}/source2.css`, "/" ).then( tokens2 => {
+      loader.fetch( path.join( testDir, testCase, "source1.css" ) ).then( tokens1 => {
+        loader.fetch( path.join( testDir, testCase, "source2.css" ) ).then( tokens2 => {
           assert.equal( loader.finalSource, expected )
           const tokens = Object.assign({}, tokens1, tokens2);
           assert.equal( JSON.stringify( tokens ), JSON.stringify( expectedTokens ) )

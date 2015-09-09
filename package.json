@@ -9,8 +9,7 @@
   "dependencies": {
     "postcss": "^4.1.11",
     "postcss-modules-extract-imports": "^0.0.5",
-    "postcss-modules-local-by-default": "^0.0.9",
-    "postcss-modules-scope": "^0.0.8"
+    "postcss-modules-local-by-default": "^0.0.9"
   },
   "devDependencies": {
     "babel": "^5.5.4",
@@ -21,6 +20,8 @@
     "mocha": "^2.2.5"
   },
   "scripts": {
+    "preinstall": "rm -rf node_modules/postcss-modules-scope",
+    "postinstall": "git clone https://github.com/sullenor/postcss-modules-scope.git node_modules/postcss-modules-scope && cd node_modules/postcss-modules-scope && git checkout absolute-paths && npm i",
     "lint": "eslint src",
     "build": "babel --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
