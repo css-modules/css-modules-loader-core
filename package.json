@@ -36,7 +36,8 @@
     "loader"
   ],
   "files": [
-    "lib"
+    "lib",
+    "sync.js"
   ],
   "author": "Glen Maddern",
   "license": "ISC",
