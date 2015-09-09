@@ -51,16 +51,16 @@ export default class Parser {
     exportNode.removeSelf()
   }
 
-  fetchImport( importNode, relativeTo, depNr ) {
+  fetchImport( importNode, sourcePath, depNr ) {
     let file = importNode.selector.match( importRegexp )[1],
       depTrace = this.trace + String.fromCharCode(depNr)
-    return this.pathFetcher( file, relativeTo, depTrace ).then( exports => {
+    return this.pathFetcher( file, sourcePath, depTrace ).then( exports => {
       importNode.each( decl => {
         if ( decl.type == 'decl' ) {
           this.translations[decl.prop] = exports[decl.value]
         }
       } )
       importNode.removeSelf()
-    }, err => console.log( err ) )
+    } )
   }
 }

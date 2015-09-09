@@ -1,4 +1,8 @@
-._compose_node_module_cool_styles_foo__example {
+._node_modules_cool_styles_bar__example
+{
+  background: #369;
+}
+._node_modules_cool_styles_foo__example {
   color: #F00;
 }
 ._compose_node_module_source__foo {
