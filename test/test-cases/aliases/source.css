@@ -1,6 +1,6 @@
 @let borders: "./borders.css", breakpoints: "./breakpoints";
 @import small from breakpoints;
-@import secondary, blue as primary from "./colors.css";
+@import secondary, primary as blue from "./colors.css";
 
 .foo {
   composes: dashed from borders;

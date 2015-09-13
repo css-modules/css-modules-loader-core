@@ -27,4 +27,4 @@ export default class Core {
 Core.localByDefault = localByDefault
 Core.extractImports = extractImports
 Core.scope = scope
-Core.defaultPlugins = [wip, localByDefault, extractImports, scope]
+Core.defaultPlugins = [wip, css => console.log(css.toResult().css), localByDefault, extractImports, scope]
