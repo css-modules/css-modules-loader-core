@@ -1,5 +1,5 @@
-@let borders: "./borders.css";
-@import small from "./breakpoints.css";
+@let borders: "./borders.css", breakpoints: "./breakpoints";
+@import small from breakpoints;
 @import secondary, blue as primary from "./colors.css";
 
 .foo {
