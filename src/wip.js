@@ -53,7 +53,9 @@ export default css => {
     }
   })
 
-  console.log(translations)
+  /* If we have no translations, don't continue */
+  if (!Object.keys(translations).length) return
+
   /* Perform replacements */
   replaceSymbols(css, translations)
 

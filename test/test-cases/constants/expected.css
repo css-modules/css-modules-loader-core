@@ -1,15 +1,15 @@
-._aliases_borders__dashed {
+._constants_borders__dashed {
   border: 4px dashed;
 }
 
 
-._aliases_source__foo {
+._constants_source__foo {
   background: aquamarine;
   border-color: red;
 }
 
 @media (max-width: 599px) {
-  ._aliases_source__foo {
+  ._constants_source__foo {
     background: white;
   }
 }
