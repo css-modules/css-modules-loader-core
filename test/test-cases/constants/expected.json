@@ -1,5 +1,5 @@
 {
   "borders": "\"./borders.css\"",
   "breakpoints": "\"./breakpoints.css\"",
-  "foo": "_constants_source__foo _constants_borders__dashed"
+  "foo": "_constants_source__foo _constants_borders__dashed _constants_colors__text-secondary"
 }

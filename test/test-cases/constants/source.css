@@ -4,7 +4,8 @@
 
 .foo {
   composes: dashed from borders;
-  background: blue;
+  composes: text-secondary from "./colors.css";
+  box-shadow: 0 0 10px blue;
   border-color: secondary;
 }
 
