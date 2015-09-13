@@ -13,3 +13,8 @@
     background: white;
   }
 }
+@media (min-width: 600px) and (max-width: 959px) {
+  ._constants_source__foo {
+    background: peru;
+  }
+}
