@@ -2,6 +2,7 @@ import postcss from 'postcss'
 import localByDefault from 'postcss-modules-local-by-default'
 import extractImports from 'postcss-modules-extract-imports'
 import scope from 'postcss-modules-scope'
+import wip from "./wip"
 
 import Parser from './parser'
 
@@ -26,4 +27,4 @@ export default class Core {
 Core.localByDefault = localByDefault
 Core.extractImports = extractImports
 Core.scope = scope
-Core.defaultPlugins = [localByDefault, extractImports, scope]
+Core.defaultPlugins = [wip, localByDefault, extractImports, scope]

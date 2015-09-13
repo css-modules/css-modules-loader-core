@@ -1,6 +1,6 @@
-@alias "./borders.css" as borders;
-@alias small from "./breakpoints.css";
-@alias secondary, primary as blue from "./colors.css";
+@let borders: "./borders.css";
+@import small from "./breakpoints.css";
+@import secondary, blue as primary from "./colors.css";
 
 .foo {
   composes: dashed from borders;
