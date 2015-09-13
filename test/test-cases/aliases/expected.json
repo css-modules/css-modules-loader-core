@@ -1,3 +1,5 @@
 {
-  "foo": "_aliases_borders__bar _aliases_source__foo"
+  "borders": "\"./borders.css\"",
+  "breakpoints": "\"./breakpoints.css\"",
+  "foo": "_aliases_source__foo _aliases_borders__dashed"
 }
