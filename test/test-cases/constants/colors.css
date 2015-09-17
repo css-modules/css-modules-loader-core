@@ -1,5 +1,5 @@
-@let primary: #f01;
-@let secondary: #2f2;
+@define primary: #f01;
+@define secondary: #2f2;
 
 .text-primary {
   color: primary;
