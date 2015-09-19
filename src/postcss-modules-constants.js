@@ -1,5 +1,5 @@
 import postcss from 'postcss'
-import replaceSymbols from './replace-symbols'
+import replaceSymbols from 'icss-replace-symbols'
 
 const matchImports = /^(.+?)\s+from\s+("[^"]*"|'[^']*'|[\w-]+)$/
 const matchLet = /(?:,\s+|^)([\w-]+):?\s+("[^"]*"|'[^']*'|[^,]+)\s?/g

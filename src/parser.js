@@ -1,5 +1,5 @@
 const importRegexp = /^:import\((.+)\)$/
-import replaceSymbols from './replace-symbols'
+import replaceSymbols from 'icss-replace-symbols'
 
 export default class Parser {
   constructor( pathFetcher, trace ) {
