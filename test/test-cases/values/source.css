@@ -1,6 +1,6 @@
-@define borders: "./borders.css", breakpoints: "./breakpoints.css";
-@import-define small, medium from breakpoints;
-@import secondary, primary as blue from "./colors.css";
+@value borders: "./borders.css", breakpoints: "./breakpoints.css";
+@value small, medium from breakpoints;
+@value secondary, primary as blue from "./colors.css";
 
 /* Imports without a "from" are just passed through */
 @import url('./old-skool.css');

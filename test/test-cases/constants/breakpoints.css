@@ -1,3 +1,0 @@
-@define small (max-width: 599px);
-@define medium (min-width: 600px) and (max-width: 959px);
-@define large (min-width: 960px);
