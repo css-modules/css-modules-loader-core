@@ -1,6 +1,6 @@
 {
   "name": "css-modules-loader-core",
-  "version": "1.0.0-beta2",
+  "version": "1.0.0-beta3",
   "description": "A loader-agnostic CSS Modules implementation, based on PostCSS",
   "main": "lib/index.js",
   "directories": {
@@ -11,7 +11,7 @@
     "postcss": "^5.0.5",
     "postcss-modules-constants": "^1.0.0",
     "postcss-modules-extract-imports": "1.0.0-beta2",
-    "postcss-modules-local-by-default": "css-modules/postcss-modules-local-by-default",
+    "postcss-modules-local-by-default": "1.0.0-beta1",
     "postcss-modules-scope": "1.0.0-beta2"
   },
   "devDependencies": {
