@@ -2,7 +2,7 @@ import postcss from 'postcss'
 import localByDefault from 'postcss-modules-local-by-default'
 import extractImports from 'postcss-modules-extract-imports'
 import scope from 'postcss-modules-scope'
-import constants from 'postcss-modules-constants'
+import values from 'postcss-modules-values'
 
 import Parser from './parser'
 
@@ -23,9 +23,9 @@ export default class Core {
 }
 
 // These four plugins are aliased under this package for simplicity.
+Core.values = values
 Core.localByDefault = localByDefault
 Core.extractImports = extractImports
 Core.scope = scope
-Core.constants = constants
 
-Core.defaultPlugins = [constants, localByDefault, extractImports, scope]
+Core.defaultPlugins = [values, localByDefault, extractImports, scope]
