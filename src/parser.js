@@ -45,7 +45,7 @@ export default class Parser {
         this.exportTokens[decl.prop] = decl.value
       }
     } )
-    exportNode.removeSelf()
+    exportNode.remove()
   }
 
   fetchImport( importNode, relativeTo, depNr ) {
@@ -57,7 +57,7 @@ export default class Parser {
           this.translations[decl.prop] = exports[decl.value]
         }
       } )
-      importNode.removeSelf()
+      importNode.remove()
     }, err => console.log( err ) )
   }
 }
