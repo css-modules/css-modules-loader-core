@@ -1,6 +1,7 @@
 ._values_borders__dashed {
   border: 4px dashed;
 }
+
 ._values_colors__text-primary {
   color: #f01;
 }
@@ -14,7 +15,6 @@
 ._values_colors__bg-secondary {
   background-color: #2f2;
 }
-
 /* Imports without a "from" are just passed through */
 @import url('./old-skool.css');
 
