@@ -1,4 +1,5 @@
 const importRegexp = /^:import\((.+)\)$/
+import replaceSymbols from 'icss-replace-symbols'
 
 export default class Parser {
   constructor( pathFetcher, trace ) {
@@ -26,11 +27,7 @@ export default class Parser {
   }
 
   linkImportedSymbols( css ) {
-    css.eachDecl( decl => {
-      Object.keys(this.translations).forEach( translation => {
-        decl.value = decl.value.replace(translation, this.translations[translation])
-      } )
-    })
+    replaceSymbols(css, this.translations)
   }
 
   extractExports( css ) {
@@ -48,7 +45,7 @@ export default class Parser {
         this.exportTokens[decl.prop] = decl.value
       }
     } )
-    exportNode.removeSelf()
+    exportNode.remove()
   }
 
   fetchImport( importNode, relativeTo, depNr ) {
@@ -60,7 +57,7 @@ export default class Parser {
           this.translations[decl.prop] = exports[decl.value]
         }
       } )
-      importNode.removeSelf()
+      importNode.remove()
     }, err => console.log( err ) )
   }
 }
