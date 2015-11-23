@@ -29,17 +29,18 @@ export default class FileSystemLoader {
   }
 
   fetch( _to, from ) {
-    let to = _to.replace( /^["']|["']$/g, '' ),
-      trace = String.fromCharCode( this.importNr++ )
+    let to = _to.replace( /^["']|["']$/g, '' )
 
-    const filename = /\w/i.test(to[0])
-      ? require.resolve(to)
-      : resolve(dirname(from), to)
+    return new Promise(( _resolve, _reject ) => {
+      const filename = /\w/i.test(to[0])
+        ? require.resolve(to)
+        : resolve(dirname(from), to)
 
-    return new Promise(( resolve, reject ) => {
+      const trace = String.fromCharCode( this.importNr++ )
+
       readFile( filename, 'utf8', (err, source) => {
         if (err) {
-          return void reject(err);
+          return void _reject(err);
         }
 
         this.core.process( source, Object.assign( this.processorOptions, { from: filename } ) )
@@ -50,9 +51,9 @@ export default class FileSystemLoader {
             // https://github.com/postcss/postcss/blob/master/docs/api.md#lazywarnings
             result.warnings().forEach(message => console.warn(message.text));
 
-            resolve( this.tokensByFile[filename] )
+            _resolve( this.tokensByFile[filename] )
           } )
-          .catch( reject )
+          .catch( _reject )
       } )
     })
   }
