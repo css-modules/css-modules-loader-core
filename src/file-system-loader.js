@@ -47,6 +47,9 @@ export default class FileSystemLoader {
             this.sources[filename] = result.css
             this.tokensByFile[filename] = result.root.tokens
 
+            // https://github.com/postcss/postcss/blob/master/docs/api.md#lazywarnings
+            result.warnings().forEach(message => console.warn(message.text));
+
             resolve( this.tokensByFile[filename] )
           } )
           .catch( reject )
