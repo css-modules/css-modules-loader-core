@@ -1,6 +1,5 @@
 import postcss from 'postcss';
 import genericNames from 'generic-names';
-import partialRight from 'lodash.partialright';
 import { relative } from 'path';
 
 import LocalByDefault from 'postcss-modules-local-by-default'
