@@ -28,9 +28,7 @@ export default class FileSystemLoader {
     this.tokensByFile = {}
   }
 
-  fetch( _to, from ) {
-    let to = _to.replace( /^["']|["']$/g, '' )
-
+  fetch( to, from ) {
     return new Promise(( _resolve, _reject ) => {
       const filename = /\w/i.test(to[0])
         ? require.resolve(to)
