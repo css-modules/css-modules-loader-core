@@ -26,15 +26,25 @@ export default class FileSystemLoader {
     this.importNr = 0
     this.sources = {}
     this.tokensByFile = {}
+    this.trace = {}
   }
 
-  fetch( to, from ) {
+  fetch( to, from, depTrace ) {
     return new Promise(( _resolve, _reject ) => {
-      const filename = /\w/i.test(to[0])
-        ? require.resolve(to)
-        : resolve(dirname(from), to)
+      const filename = /\w/i.test( to[0] )
+        ? require.resolve( to )
+        : resolve( dirname( from ), to )
 
-      const trace = String.fromCharCode( this.importNr++ )
+      if ( this.tokensByFile[filename] ) {
+        return void _resolve( this.tokensByFile[filename] )
+      }
+
+      let trace = this.trace[from] || String.fromCharCode( this.importNr++ )
+      if (typeof depTrace === 'number') {
+        trace += String.fromCharCode( depTrace )
+      }
+
+      this.trace[filename] = trace
 
       readFile( filename, 'utf8', (err, source) => {
         if (err) {
@@ -43,7 +53,7 @@ export default class FileSystemLoader {
 
         this.core.process( source, Object.assign( this.processorOptions, { from: filename } ) )
           .then( result => {
-            this.sources[filename] = result.css
+            this.sources[trace] = result.css
             this.tokensByFile[filename] = result.root.tokens
 
             // https://github.com/postcss/postcss/blob/master/docs/api.md#lazywarnings
