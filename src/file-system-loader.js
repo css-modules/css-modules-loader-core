@@ -1,6 +1,6 @@
-import Core from './index.js'
-import fs from 'fs'
-import path from 'path'
+import core from './index'
+import { readFile } from 'fs'
+import { dirname, resolve } from 'path'
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
@@ -20,47 +20,54 @@ const traceKeySorter = ( a, b ) => {
 };
 
 export default class FileSystemLoader {
-  constructor( root, plugins ) {
-    this.root = root
-    this.sources = {}
+  constructor( options, processorOptions = {} ) {
+    this.processorOptions = processorOptions
+    this.core = core( options, this.fetch.bind(this) )
     this.importNr = 0
-    this.core = new Core(plugins)
-    this.tokensByFile = {};
+    this.sources = {}
+    this.tokensByFile = {}
+    this.trace = {}
   }
 
-  fetch( _newPath, relativeTo, _trace ) {
-    let newPath = _newPath.replace( /^["']|["']$/g, "" ),
-      trace = _trace || String.fromCharCode( this.importNr++ )
-    return new Promise( ( resolve, reject ) => {
-      let relativeDir = path.dirname( relativeTo ),
-        rootRelativePath = path.resolve( relativeDir, newPath ),
-        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+  fetch( to, from, depTrace ) {
+    return new Promise(( _resolve, _reject ) => {
+      const filename = /\w/i.test( to[0] )
+        ? require.resolve( to )
+        : resolve( dirname( from ), to )
 
-      // if the path is not relative or absolute, try to resolve it in node_modules
-      if (newPath[0] !== '.' && newPath[0] !== '/') {
-        try {
-          fileRelativePath = require.resolve(newPath);
-        }
-        catch (e) {}
+      if ( this.tokensByFile[filename] ) {
+        return void _resolve( this.tokensByFile[filename] )
       }
 
-      const tokens = this.tokensByFile[fileRelativePath]
-      if (tokens) { return resolve(tokens) }
+      let trace = this.trace[from] || String.fromCharCode( this.importNr++ )
+      if (typeof depTrace === 'number') {
+        trace += String.fromCharCode( depTrace )
+      }
 
-      fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
-        if ( err ) reject( err )
-        this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
-          .then( ( { injectableSource, exportTokens } ) => {
-            this.sources[trace] = injectableSource
-            this.tokensByFile[fileRelativePath] = exportTokens
-            resolve( exportTokens )
-          }, reject )
+      this.trace[filename] = trace
+
+      readFile( filename, 'utf8', (err, source) => {
+        if (err) {
+          return void _reject(err);
+        }
+
+        this.core.process( source, Object.assign( this.processorOptions, { from: filename } ) )
+          .then( result => {
+            this.sources[trace] = result.css
+            this.tokensByFile[filename] = result.root.tokens
+
+            // https://github.com/postcss/postcss/blob/master/docs/api.md#lazywarnings
+            result.warnings().forEach(message => console.warn(message.text));
+
+            _resolve( this.tokensByFile[filename] )
+          } )
+          .catch( _reject )
       } )
-    } )
+    })
   }
 
   get finalSource() {
     return Object.keys( this.sources ).sort( traceKeySorter ).map( s => this.sources[s] )
-      .join( "" )
+      .join( '' )
   }
 }

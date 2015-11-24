@@ -1,31 +1,65 @@
-import postcss from 'postcss'
-import localByDefault from 'postcss-modules-local-by-default'
-import extractImports from 'postcss-modules-extract-imports'
-import scope from 'postcss-modules-scope'
-import values from 'postcss-modules-values'
+import postcss from 'postcss';
+import genericNames from 'generic-names';
+import { relative } from 'path';
 
-import Parser from './parser'
+import LocalByDefault from 'postcss-modules-local-by-default'
+import ExtractImports from 'postcss-modules-extract-imports'
+import Scope from 'postcss-modules-scope'
+import Parser from 'postcss-modules-parser'
+import Values from 'postcss-modules-values'
 
-export default class Core {
-  constructor( plugins ) {
-    this.plugins = plugins || Core.defaultPlugins
+/**
+ * @param  {array}           options.append
+ * @param  {array}           options.prepend
+ * @param  {array}           options.use
+ * @param  {function}        options.createImportedName
+ * @param  {function|string} options.generateScopedName
+ * @param  {string}          options.mode
+ * @param  {string}          options.rootDir
+ * @param  {function}        fetch
+ * @return {object}
+ */
+export default function core({
+  append = [],
+  prepend = [],
+  createImportedName,
+  generateScopedName: scopedName,
+  rootDir: context = process.cwd(),
+  mode,
+  use,
+} = {}, _fetch) {
+  let instance
+  let generateScopedName
+
+  const fetch = function () {
+    return _fetch.apply(null, Array.prototype.slice.call(arguments).concat(instance));
   }
 
-  load( sourceString, sourcePath, trace, pathFetcher ) {
-    let parser = new Parser( pathFetcher, trace )
-
-    return postcss( this.plugins.concat( [parser.plugin] ) )
-      .process( sourceString, { from: "/" + sourcePath } )
-      .then( result => {
-        return { injectableSource: result.css, exportTokens: parser.exportTokens }
-      } )
+  if (scopedName) {
+    // https://github.com/css-modules/postcss-modules-scope/blob/master/src/index.js#L38
+    generateScopedName = typeof scopedName !== 'function'
+      ? genericNames(scopedName || '[name]__[local]___[hash:base64:5]', {context})
+      : (local, filepath, css) => scopedName(local, filepath, css, context)
+  } else {
+    generateScopedName = (localName, filepath) => {
+      return Scope.generateScopedName(localName, relative(context, filepath));
+    }
   }
+
+  const plugins = (use || [
+    ...prepend,
+    Values,
+    mode
+      ? new LocalByDefault({mode})
+      : LocalByDefault,
+    createImportedName
+      ? new ExtractImports({createImportedName})
+      : ExtractImports,
+    new Scope({generateScopedName}),
+    ...append,
+  ])
+  .concat(new Parser({fetch})) // no pushing in order to avoid the possible mutations
+
+  instance = postcss(plugins)
+  return instance;
 }
-
-// These four plugins are aliased under this package for simplicity.
-Core.values = values
-Core.localByDefault = localByDefault
-Core.extractImports = extractImports
-Core.scope = scope
-
-Core.defaultPlugins = [values, localByDefault, extractImports, scope]
