@@ -23,6 +23,7 @@ export default class FileSystemLoader {
   constructor( root, plugins ) {
     this.root = root
     this.sources = {}
+    this.traces = {}
     this.importNr = 0
     this.core = new Core(plugins)
     this.tokensByFile = {};
@@ -51,7 +52,8 @@ export default class FileSystemLoader {
         if ( err ) reject( err )
         this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
           .then( ( { injectableSource, exportTokens } ) => {
-            this.sources[trace] = injectableSource
+            this.sources[fileRelativePath] = injectableSource
+            this.traces[trace] = fileRelativePath
             this.tokensByFile[fileRelativePath] = exportTokens
             resolve( exportTokens )
           }, reject )
@@ -60,7 +62,16 @@ export default class FileSystemLoader {
   }
 
   get finalSource() {
-    return Object.keys( this.sources ).sort( traceKeySorter ).map( s => this.sources[s] )
-      .join( "" )
+    const traces = this.traces
+    const sources = this.sources
+    let written = new Set()
+
+    return Object.keys( traces ).sort( traceKeySorter ).map(key => {
+      const filename = traces[key]
+      if (written.has(filename)) { return null }
+      written.add(filename)
+
+      return sources[filename];
+    }).join( "" )
   }
 }
