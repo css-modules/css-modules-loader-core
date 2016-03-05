@@ -1,0 +1,3 @@
+.foo {
+  composes: example from "cool-local-styles/foo.css";
+}
