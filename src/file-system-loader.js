@@ -1,6 +1,7 @@
 import Core from './index.js'
 import fs from 'fs'
 import path from 'path'
+import nodeResolve from 'resolve'
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
@@ -34,12 +35,15 @@ export default class FileSystemLoader {
     return new Promise( ( resolve, reject ) => {
       let relativeDir = path.dirname( relativeTo ),
         rootRelativePath = path.resolve( relativeDir, newPath ),
-        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+        rootRelativeDir = path.join( this.root, relativeDir ),
+        fileRelativePath = path.resolve( rootRelativeDir, newPath )
 
       // if the path is not relative or absolute, try to resolve it in node_modules
       if (newPath[0] !== '.' && newPath[0] !== '/') {
         try {
-          fileRelativePath = require.resolve(newPath);
+          fileRelativePath = nodeResolve.sync(newPath, { basedir: rootRelativeDir });
+          // in this case we need to actualize rootRelativePath too
+          rootRelativePath = path.relative(this.root, fileRelativePath);
         }
         catch (e) {}
       }
