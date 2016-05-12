@@ -3,15 +3,20 @@
 import assert from "assert"
 import fs from "fs"
 import path from "path"
+import autoprefixer from "autoprefixer"
+
 import FileSystemLoader from "../src/file-system-loader"
+import { defaultPlugins } from "../src"
 
 let normalize = ( str ) => {
   return str.replace( /\r\n?/g, "\n" );
 }
 
+
 const pipelines = {
   "test-cases": undefined,
-  "cssi": []
+  "cssi": [],
+  "autoprefixer": defaultPlugins.concat(autoprefixer({browsers: 'IE 10'}))
 }
 
 Object.keys( pipelines ).forEach( dirname => {

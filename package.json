@@ -9,12 +9,13 @@
   "dependencies": {
     "icss-replace-symbols": "1.0.2",
     "postcss": "5.0.10",
-    "postcss-modules-values": "1.1.2",
     "postcss-modules-extract-imports": "1.0.0",
     "postcss-modules-local-by-default": "1.0.1",
-    "postcss-modules-scope": "1.0.0"
+    "postcss-modules-scope": "1.0.1",
+    "postcss-modules-values": "1.1.2"
   },
   "devDependencies": {
+    "autoprefixer": "6.3.6",
     "babel": "5.8.29",
     "babel-eslint": "4.1.3",
     "babelify": "6.4.0",
