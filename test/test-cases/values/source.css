@@ -1,4 +1,5 @@
-@value borders: "./borders.css", breakpoints: "./breakpoints.css";
+@value borders: "./borders.css";
+@value breakpoints: "./breakpoints.css";
 @value small, medium from breakpoints;
 @value secondary, primary as blue from "./colors.css";
 
