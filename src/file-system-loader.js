@@ -1,6 +1,7 @@
 import Core from './index.js'
 import fs from 'fs'
 import path from 'path'
+import pathIsAbsolute from 'path-is-absolute';
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
@@ -26,6 +27,12 @@ export default class FileSystemLoader {
     this.importNr = 0
     this.core = new Core(plugins)
     this.tokensByFile = {};
+
+    Core.scope.generateScopedName = function (exportedName, unsanitizedPath) {
+      let sanitizedPath = path.relative(root, unsanitizedPath).replace(/\.[^\.\/\\]+$/, '').replace(/[\W_]+/g, '_').replace(/^_|_$/g, '');
+      return `_${sanitizedPath}__${exportedName}`;
+    };
+
   }
 
   fetch( _newPath, relativeTo, _trace ) {
@@ -33,8 +40,7 @@ export default class FileSystemLoader {
       trace = _trace || String.fromCharCode( this.importNr++ )
     return new Promise( ( resolve, reject ) => {
       let relativeDir = path.dirname( relativeTo ),
-        rootRelativePath = path.resolve( relativeDir, newPath ),
-        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+        fileRelativePath = path.resolve(pathIsAbsolute(relativeDir) ? relativeDir : path.join( this.root, relativeDir ), newPath )
 
       // if the path is not relative or absolute, try to resolve it in node_modules
       if (newPath[0] !== '.' && newPath[0] !== '/') {
@@ -49,7 +55,7 @@ export default class FileSystemLoader {
 
       fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
-        this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
+        this.core.load( source, fileRelativePath, trace, this.fetch.bind( this ) )
           .then( ( { injectableSource, exportTokens } ) => {
             this.sources[trace] = injectableSource
             this.tokensByFile[fileRelativePath] = exportTokens

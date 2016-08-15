@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "icss-replace-symbols": "1.0.2",
+    "path-is-absolute": "^1.0.0",
     "postcss": "5.0.10",
     "postcss-modules-values": "1.1.2",
     "postcss-modules-extract-imports": "1.0.0",

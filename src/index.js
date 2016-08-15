@@ -15,7 +15,7 @@ export default class Core {
     let parser = new Parser( pathFetcher, trace )
 
     return postcss( this.plugins.concat( [parser.plugin] ) )
-      .process( sourceString, { from: "/" + sourcePath } )
+      .process( sourceString, { from: sourcePath } )
       .then( result => {
         return { injectableSource: result.css, exportTokens: parser.exportTokens }
       } )
