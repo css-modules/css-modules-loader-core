@@ -33,26 +33,26 @@ export default class FileSystemLoader {
       trace = _trace || String.fromCharCode( this.importNr++ )
     return new Promise( ( resolve, reject ) => {
       let relativeDir = path.dirname( relativeTo ),
-        rootRelativePath = path.resolve( relativeDir, newPath ),
-        fileRelativePath = path.resolve( path.join( this.root, relativeDir ), newPath )
+        filename = path.resolve( this.root + relativeDir, newPath )
 
       // if the path is not relative or absolute, try to resolve it in node_modules
-      if (newPath[0] !== '.' && newPath[0] !== '/') {
+      if ( newPath[0] !== '.' && newPath[0] !== path.sep ) {
         try {
-          fileRelativePath = require.resolve(newPath);
+          filename = require.resolve( newPath );
         }
         catch (e) {}
       }
 
-      const tokens = this.tokensByFile[fileRelativePath]
-      if (tokens) { return resolve(tokens) }
+      const rootRelativePath = path.sep + path.relative( this.root, filename )
+      const tokens = this.tokensByFile[filename]
+      if ( tokens ) { return resolve( tokens ) }
 
-      fs.readFile( fileRelativePath, "utf-8", ( err, source ) => {
+      fs.readFile( filename, "utf-8", ( err, source ) => {
         if ( err ) reject( err )
         this.core.load( source, rootRelativePath, trace, this.fetch.bind( this ) )
           .then( ( { injectableSource, exportTokens } ) => {
             this.sources[trace] = injectableSource
-            this.tokensByFile[fileRelativePath] = exportTokens
+            this.tokensByFile[filename] = exportTokens
             resolve( exportTokens )
           }, reject )
       } )
