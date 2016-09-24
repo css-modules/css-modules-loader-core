@@ -1,3 +1,6 @@
 .foo {
   composes: example from "cool-styles/foo.css";
 }
+.bar {
+  composes: example3 from "cool-styles/foo.css";
+}
