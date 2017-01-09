@@ -18,7 +18,7 @@
     "babel": "5.8.29",
     "babel-eslint": "7.1.0",
     "babelify": "7.3.0",
-    "chokidar-cli": "1.1.0",
+    "chokidar-cli": "1.2.0",
     "eslint": "3.10.1",
     "mocha": "3.1.2"
   },
