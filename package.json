@@ -15,7 +15,7 @@
     "postcss-modules-scope": "1.0.2"
   },
   "devDependencies": {
-    "babel": "5.8.29",
+    "babel": "6.1.5",
     "babel-eslint": "7.1.0",
     "babelify": "7.3.0",
     "chokidar-cli": "1.1.0",
