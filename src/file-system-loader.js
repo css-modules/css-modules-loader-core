@@ -1,6 +1,6 @@
 import Core from './index.js'
 import fs from 'fs'
-import path from 'path'
+import {posix as path} from 'path';
 
 // Sorts dependencies in the following way:
 // AAA comes before AA and A
