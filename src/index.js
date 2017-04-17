@@ -5,6 +5,7 @@ import scope from 'postcss-modules-scope'
 import values from 'postcss-modules-values'
 
 import Parser from './parser'
+import SyncParser from './synchronous-parser'
 
 export default class Core {
   constructor( plugins ) {
@@ -19,6 +20,16 @@ export default class Core {
       .then( result => {
         return { injectableSource: result.css, exportTokens: parser.exportTokens }
       } )
+  }
+
+  loadSync( sourceString, sourcePath, trace, pathFetcher ) {
+    let parser = new SyncParser( pathFetcher, trace )
+
+    let result = postcss( this.plugins.concat( [parser.plugin] ) )
+      .process( sourceString, { from: "/" + sourcePath } )
+      .stringify()
+
+    return { injectableSource: result.css, exportTokens: parser.exportTokens }
   }
 }
 
