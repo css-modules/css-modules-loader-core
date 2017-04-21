@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "babel": "5.8.29",
-    "babel-eslint": "7.1.0",
+    "babel-eslint": "7.2.3",
     "babelify": "7.3.0",
     "chokidar-cli": "1.1.0",
     "eslint": "3.10.1",
