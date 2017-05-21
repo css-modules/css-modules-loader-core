@@ -12,7 +12,7 @@
     "postcss-modules-values": "1.2.2",
     "postcss-modules-extract-imports": "1.0.1",
     "postcss-modules-local-by-default": "1.1.1",
-    "postcss-modules-scope": "1.0.2"
+    "postcss-modules-scope": "1.1.0"
   },
   "devDependencies": {
     "babel": "5.8.29",
