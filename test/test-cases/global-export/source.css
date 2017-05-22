@@ -1,0 +1,7 @@
+:global .globalName {
+  color: red;
+}
+
+.localName :global p {
+  color: green;
+}
