@@ -26,7 +26,8 @@ export default class FileSystemLoader {
     this.traces = {}
     this.importNr = 0
     this.core = new Core(plugins)
-    this.tokensByFile = {};
+    this.tokensByFile = {}
+    this.resolvedPaths = {}
   }
 
   fetch( _newPath, relativeTo, _trace ) {
@@ -40,9 +41,16 @@ export default class FileSystemLoader {
       // if the path is not relative or absolute, try to resolve it in node_modules
       if (newPath[0] !== '.' && newPath[0] !== '/') {
         try {
-          fileRelativePath = require.resolve(newPath);
+          fileRelativePath = require.resolve(newPath)
+          // Record the resolved path since this might be inside node_modules
+          this.resolvedPaths[rootRelativePath] = path.dirname(fileRelativePath)
         }
         catch (e) {}
+      } else {
+        // Relative path but might be relative to a node_modules module
+        if (this.resolvedPaths[relativeTo]) {
+          fileRelativePath = path.resolve(this.resolvedPaths[relativeTo], newPath)
+        }
       }
 
       const tokens = this.tokensByFile[fileRelativePath]
