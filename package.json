@@ -8,11 +8,11 @@
   },
   "dependencies": {
     "icss-replace-symbols": "1.1.0",
-    "postcss": "6.0.1",
-    "postcss-modules-extract-imports": "1.1.0",
-    "postcss-modules-local-by-default": "1.2.0",
-    "postcss-modules-scope": "1.1.0",
-    "postcss-modules-values": "1.3.0"
+    "postcss": "7.0.5",
+    "postcss-modules-extract-imports": "../postcss-modules-extract-imports",
+    "postcss-modules-local-by-default": "../postcss-icss-selectors",
+    "postcss-modules-scope": "../postcss-icss-composes",
+    "postcss-modules-values": "../postcss-icss-values"
   },
   "devDependencies": {
     "babel": "5.8.29",
