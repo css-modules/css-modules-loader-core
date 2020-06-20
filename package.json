@@ -27,7 +27,7 @@
     "build": "babel --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
     "test": "mocha --compilers js:babel/register",
-    "prepublish": "rm -rf lib/* && npm run build"
+    "prepublishOnly": "rm -rf lib/* && npm run build"
   },
   "repository": {
     "type": "git",
