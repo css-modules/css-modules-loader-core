@@ -1,0 +1,14 @@
+{
+	"presets": [
+		[
+			"@babel/preset-env", {
+				"loose": true,
+				"modules": "commonjs",
+				"targets": {
+					"node": "6"
+				}
+			}
+		]
+	],
+	"plugins": ["add-module-exports"]
+}
