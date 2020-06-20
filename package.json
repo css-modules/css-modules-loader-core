@@ -26,7 +26,7 @@
     "mocha": "8.0.1"
   },
   "scripts": {
-    "lint": "eslint src",
+    "lint": "eslint src test",
     "build": "babel --out-dir lib src",
     "autotest": "chokidar src test -c 'npm test'",
     "test": "mocha -r @babel/register",
