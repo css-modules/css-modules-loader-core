@@ -1,26 +1,28 @@
 {
-	"parser": "babel-eslint",
 	"env": {
 		"node": true
 	},
-	"ecmaFeatures": {
-		"arrowFunctions": true,
-		"blockBindings": true,
-		"classes": true,
-		"defaultParams": true,
-		"destructuring": true,
-		"forOf": true,
-		"modules": true,
-		"objectLiteralComputedProperties": true,
-		"objectLiteralShorthandMethods": true,
-		"objectLiteralShorthandProperties": true,
-		"spread": true,
-		"superInFunctions": true,
-		"templateStrings": true,
-		"unicodeCodePointEscapes": true,
-		"jsx": true
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"arrowFunctions": true,
+			"blockBindings": true,
+			"classes": true,
+			"defaultParams": true,
+			"destructuring": true,
+			"forOf": true,
+			"modules": true,
+			"objectLiteralComputedProperties": true,
+			"objectLiteralShorthandMethods": true,
+			"objectLiteralShorthandProperties": true,
+			"spread": true,
+			"superInFunctions": true,
+			"templateStrings": true,
+			"unicodeCodePointEscapes": true,
+			"jsx": true
+		}
 	},
 	"rules": {
-		"quotes": "single"
+		"quotes": [2, "single"]
 	}
 }

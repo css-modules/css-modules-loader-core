@@ -19,7 +19,7 @@ export default class Parser {
   fetchAllImports( css ) {
     let imports = []
     css.each( node => {
-      if ( node.type == "rule" && node.selector.match( importRegexp ) ) {
+      if ( node.type == 'rule' && node.selector.match( importRegexp ) ) {
         imports.push( this.fetchImport( node, css.source.input.from, imports.length ) )
       }
     } )
@@ -32,7 +32,7 @@ export default class Parser {
 
   extractExports( css ) {
     css.each( node => {
-      if ( node.type == "rule" && node.selector == ":export" ) this.handleExport( node )
+      if ( node.type == 'rule' && node.selector == ':export' ) this.handleExport( node )
     } )
   }
 
